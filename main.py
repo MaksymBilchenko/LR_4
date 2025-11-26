@@ -13,7 +13,6 @@ class SimplifiedDigitalSignature:
     def load_existing_data(self):
         """Завантаження збережених даних при запуску програми"""
         try:
-            # Завантажуємо ключі, якщо вони є
             if os.path.exists("private_key.txt"):
                 with open("private_key.txt", "r") as f:
                     self.private_key = int(f.read().strip())
@@ -24,7 +23,6 @@ class SimplifiedDigitalSignature:
                     self.public_key = int(f.read().strip())
                 print("✅ Завантажено публічний ключ з файлу")
             
-            # Завантажуємо підпис, якщо він є
             if os.path.exists("signature.txt"):
                 with open("signature.txt", "r") as f:
                     self.signature = int(f.read().strip())
@@ -43,7 +41,6 @@ class SimplifiedDigitalSignature:
         print(f"Приватний ключ: {self.private_key}")
         print(f"Публічний ключ: {self.public_key}")
         
-        # Зберігаємо ключі у файли
         with open("private_key.txt", "w") as f:
             f.write(str(self.private_key))
         with open("public_key.txt", "w") as f:
@@ -78,7 +75,6 @@ class SimplifiedDigitalSignature:
             
         self.signature = self.document_hash ^ self.private_key
         
-        # Зберігаємо підпис у файл
         with open("signature.txt", "w") as f:
             f.write(str(self.signature))
         
@@ -94,11 +90,9 @@ class SimplifiedDigitalSignature:
             return False
         
         try:
-            # Читаємо підпис з файлу (а не з пам'яті)
             with open("signature.txt", "r") as f:
                 signature_from_file = int(f.read().strip())
             
-            # Читаємо документ для перевірки
             with open(document_path_to_verify, 'rb') as f:
                 current_content = f.read()
             
